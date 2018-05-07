@@ -1,18 +1,4 @@
-{{#each categoriesSortedByAddonCount as |category|}}
-  {{#comma-separated list=categoriesSortedByAddonCount item=category as |value separator|}}
-    {{#link-to "categories.show" value.slug}}
-      {{#if showWithoutParent}}
-        {{value.name}}
-      {{else}}
-        {{#if value.parent}}
-          {{value.parent.name}} >
-        {{/if}}
-        {{value.name}}
-      {{~/if~}}
-      {{#if showAddonCount}}
-        ({{value.totalAddonCount}})
-      {{~/if~}}
-      {{separator}}
-    {{/link-to}}
-  {{/comma-separated}}
-{{/each}}
+{{#each categoriesSortedByAddonCount as |category|}}{{#comma-separated list=categoriesSortedByAddonCount item=category as |value separator|}}{{#link-to "categories.show" value.slug}}{{#if showWithoutParent}}        {{value.name}}
+{{else}}{{#if value.parent}}          {{value.parent.name}} >
+{{/if}}        {{value.name}}{{/if}}{{#if showAddonCount}}        ({{value.totalAddonCount}}){{/if}}{{separator}}
+{{/link-to}}{{/comma-separated}}{{/each}}

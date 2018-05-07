@@ -1,72 +1,37 @@
 <div class="large-search with-default-styling">
   <div class="search">
     <div class="search-wrapper">
-      <input type="search"
-             placeholder="Search for addons, maintainers and categories"
-             autocomplete="off"
-             id="search-input"
-             spellcheck="false"
-             value={{query}}
-                 oninput={{action (perform search) value="target.value"}}>
-      {{#if query}}
-        <button {{action clearSearch}} class="icon-close test-clear-search"></button>
-      {{/if}}
-    </div>
+      <input type="search" placeholder="Search for addons, maintainers and categories" autocomplete="off" id="search-input" spellcheck="false" value={{@query}} oninput={{action (perform search) value="target.value"}}></input>
+{{#if @query}}        <button class="icon-close test-clear-search" {{action clearSearch}}></button>
+{{/if}}    </div>
     <div class="readme-toggle">
-      {{input type="checkbox"
-              class="test-search-readmes"
-              id="search-readmes"
-              checked=searchReadmes
-              change=(action (perform toggleReadmeSearch))}}
+      {{input type="checkbox" class="test-search-readmes" id="search-readmes" checked=@searchReadmes change=(action (perform toggleReadmeSearch))}}
       <label for="search-readmes">Search readmes</label>
     </div>
-    <h6 class="no-results {{if hasSearchedAndNoResults 'showing'}}">No results found for "{{query}}"</h6>
+    <h6 class="no-results {{if hasSearchedAndNoResults "showing"}}">No results found for "{{@query}}"</h6>
   </div>
 
-  {{#if results.length}}
-    <h4 class="result-info test-result-info">Results for "{{query}}"</h4>
-    {{#search-result-set results=results.displayingReadmes totalCount=results.totalReadmeCount fetchMore=fetchMoreReadmes title="Readmes" resultClass="readme-results"}}
-      <ul class="readme-list">
-        {{#each results.displayingReadmes as |addon|}}
-          <li>
+{{#if results.length}}    <h4 class="result-info test-result-info">Results for "{{@query}}"</h4>
+{{#search-result-set results=results.displayingReadmes totalCount=results.totalReadmeCount fetchMore=fetchMoreReadmes title="Readmes" resultClass="readme-results"}}      <ul class="readme-list">
+{{#each results.displayingReadmes as |addon|}}          <li>
             {{addon-details addon=addon}}
-            {{#each (get _results.readmeMatchMap addon.id) as |match|}}
-              <div class="test-readme-match text-match">
+{{#each (get _results.readmeMatchMap addon.id) as |match|}}              <div class="test-readme-match text-match">
                 ...{{sanitize-html match "relaxed-with-nofollow"}}...
               </div>
-            {{/each}}
-          </li>
-        {{/each}}
-      </ul>
-    {{/search-result-set}}
-    {{#search-result-set results=results.displayingCategories totalCount=results.totalCategoriesCount fetchMore=fetchMoreCategories title="Categories" resultClass="category-results"}}
-      <ul>
-        {{#each results.displayingCategories as |category|}}
-          <li>
-            {{#link-to "categories.show" category.slug}}
-              <span class="bullet">&#9632;</span>
+{{/each}}          </li>
+{{/each}}      </ul>
+{{/search-result-set}}{{#search-result-set results=results.displayingCategories totalCount=results.totalCategoriesCount fetchMore=fetchMoreCategories title="Categories" resultClass="category-results"}}      <ul>
+{{#each results.displayingCategories as |category|}}          <li>
+{{#link-to "categories.show" category.slug}}              <span class="bullet">■</span>
               <div>{{category.name}} ({{category.totalAddonCount}})</div>
-            {{/link-to}}
-          </li>
-        {{/each}}
-      </ul>
-    {{/search-result-set}}
-    {{#search-result-set results=results.displayingAddons totalCount=results.totalAddonsCount fetchMore=fetchMoreAddons title="Addons" resultClass="addon-results"}}
-      {{addon-list addons=results.displayingAddons}}
-    {{/search-result-set}}
-    {{#search-result-set results=results.displayingMaintainers totalCount=results.totalMaintainersCount fetchMore=fetchMoreMaintainers title="Maintainers" resultClass="maintainer-results"}}
-      <ul>
-        {{#each results.displayingMaintainers as |maintainer|}}
-          <li>
-            {{#link-to "maintainers.show" maintainer.name}}
-              <span class="bullet">&#9632;</span>
+{{/link-to}}          </li>
+{{/each}}      </ul>
+{{/search-result-set}}{{#search-result-set results=results.displayingAddons totalCount=results.totalAddonsCount fetchMore=fetchMoreAddons title="Addons" resultClass="addon-results"}}      {{addon-list addons=results.displayingAddons}}
+{{/search-result-set}}{{#search-result-set results=results.displayingMaintainers totalCount=results.totalMaintainersCount fetchMore=fetchMoreMaintainers title="Maintainers" resultClass="maintainer-results"}}      <ul>
+{{#each results.displayingMaintainers as |maintainer|}}          <li>
+{{#link-to "maintainers.show" maintainer.name}}              <span class="bullet">■</span>
               <div>{{maintainer.name}}</div>
-            {{/link-to}}
-          </li>
-        {{/each}}
-      </ul>
-    {{/search-result-set}}
-  {{else if search.isRunning}}
-    {{dot-spinner}}
-  {{/if}}
-</div>
+{{/link-to}}          </li>
+{{/each}}      </ul>
+{{/search-result-set}}{{else}}{{#if search.isRunning}}    {{dot-spinner}}
+  {{/if}}{{/if}}</div>
