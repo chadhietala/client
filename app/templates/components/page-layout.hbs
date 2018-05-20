@@ -39,7 +39,7 @@
           <li>
             {{#link-to "about"}}About{{/link-to}}
           </li>
-          {{#if session.isAuthenticated}}
+          {{#if this.session.isAuthenticated}}
             <li>
               <button {{action logoutUser}} class="logout">Log out</button>
             </li>
@@ -51,7 +51,7 @@
       {{yield}}
     </div>
     {{#if showCategories}}
-      {{category-finder class="categories-list" categories=categories}}
+      {{category-finder class="categories-list" categories=this.categories}}
     {{/if}}
   </div>
 </div>

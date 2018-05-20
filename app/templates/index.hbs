@@ -1,4 +1,4 @@
 {{#page-layout showCategories=true showHeaderSearch=false}}
-  {{large-search query=query searchReadmes=searchReadmes}}
-  {{route-index class="route-index" topAddons=model.topAddons newAddons=model.newAddons recentlyScoredAddons=model.recentlyScoredAddons}}
+  {{large-search query=this.query searchReadmes=this.searchReadmes}}
+  {{route-index class="route-index" topAddons=this.model.topAddons newAddons=this.model.newAddons recentlyScoredAddons=this.model.recentlyScoredAddons}}
 {{/page-layout}}

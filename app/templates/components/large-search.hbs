@@ -7,7 +7,7 @@
              id="search-input"
              spellcheck="false"
              value={{query}}
-                 oninput={{action (perform search) value="target.value"}}>
+                 oninput={{action (perform this.search) value="target.value"}}>
       {{#if query}}
         <button {{action clearSearch}} class="icon-close test-clear-search"></button>
       {{/if}}
@@ -17,17 +17,17 @@
               class="test-search-readmes"
               id="search-readmes"
               checked=searchReadmes
-              change=(action (perform toggleReadmeSearch))}}
+              change=(action (perform this.toggleReadmeSearch))}}
       <label for="search-readmes">Search readmes</label>
     </div>
-    <h6 class="no-results {{if hasSearchedAndNoResults 'showing'}}">No results found for "{{query}}"</h6>
+    <h6 class="no-results {{if this.hasSearchedAndNoResults 'showing'}}">No results found for "{{query}}"</h6>
   </div>
 
-  {{#if results.length}}
+  {{#if this.results.length}}
     <h4 class="result-info test-result-info">Results for "{{query}}"</h4>
-    {{#search-result-set results=results.displayingReadmes totalCount=results.totalReadmeCount fetchMore=fetchMoreReadmes title="Readmes" resultClass="readme-results"}}
+    {{#search-result-set results=this.results.displayingReadmes totalCount=this.results.totalReadmeCount fetchMore=fetchMoreReadmes title="Readmes" resultClass="readme-results"}}
       <ul class="readme-list">
-        {{#each results.displayingReadmes as |addon|}}
+        {{#each this.results.displayingReadmes as |addon|}}
           <li>
             {{addon-details addon=addon}}
             {{#each (get _results.readmeMatchMap addon.id) as |match|}}
@@ -39,9 +39,9 @@
         {{/each}}
       </ul>
     {{/search-result-set}}
-    {{#search-result-set results=results.displayingCategories totalCount=results.totalCategoriesCount fetchMore=fetchMoreCategories title="Categories" resultClass="category-results"}}
+    {{#search-result-set results=this.results.displayingCategories totalCount=this.results.totalCategoriesCount fetchMore=fetchMoreCategories title="Categories" resultClass="category-results"}}
       <ul>
-        {{#each results.displayingCategories as |category|}}
+        {{#each this.results.displayingCategories as |category|}}
           <li>
             {{#link-to "categories.show" category.slug}}
               <span class="bullet">&#9632;</span>
@@ -51,12 +51,12 @@
         {{/each}}
       </ul>
     {{/search-result-set}}
-    {{#search-result-set results=results.displayingAddons totalCount=results.totalAddonsCount fetchMore=fetchMoreAddons title="Addons" resultClass="addon-results"}}
-      {{addon-list addons=results.displayingAddons}}
+    {{#search-result-set results=this.results.displayingAddons totalCount=this.results.totalAddonsCount fetchMore=fetchMoreAddons title="Addons" resultClass="addon-results"}}
+      {{addon-list addons=this.results.displayingAddons}}
     {{/search-result-set}}
-    {{#search-result-set results=results.displayingMaintainers totalCount=results.totalMaintainersCount fetchMore=fetchMoreMaintainers title="Maintainers" resultClass="maintainer-results"}}
+    {{#search-result-set results=this.results.displayingMaintainers totalCount=this.results.totalMaintainersCount fetchMore=fetchMoreMaintainers title="Maintainers" resultClass="maintainer-results"}}
       <ul>
-        {{#each results.displayingMaintainers as |maintainer|}}
+        {{#each this.results.displayingMaintainers as |maintainer|}}
           <li>
             {{#link-to "maintainers.show" maintainer.name}}
               <span class="bullet">&#9632;</span>
@@ -66,7 +66,7 @@
         {{/each}}
       </ul>
     {{/search-result-set}}
-  {{else if search.isRunning}}
-    {{dot-spinner}}
+  {{else if this.search.isRunning}}
+    {{this.dot-spinner}}
   {{/if}}
 </div>

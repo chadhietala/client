@@ -1,7 +1,7 @@
-{{#each categoriesSortedByAddonCount as |category|}}
-  {{#comma-separated list=categoriesSortedByAddonCount item=category as |value separator|}}
+{{#each this.categoriesSortedByAddonCount as |category|}}
+  {{#comma-separated list=this.categoriesSortedByAddonCount item=category as |value separator|}}
     {{#link-to "categories.show" value.slug}}
-      {{#if showWithoutParent}}
+      {{#if this.showWithoutParent}}
         {{value.name}}
       {{else}}
         {{#if value.parent}}
@@ -9,7 +9,7 @@
         {{/if}}
         {{value.name}}
       {{~/if~}}
-      {{#if showAddonCount}}
+      {{#if this.showAddonCount}}
         ({{value.totalAddonCount}})
       {{~/if~}}
       {{separator}}
